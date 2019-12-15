@@ -1,0 +1,38 @@
+version: '3.3'
+
+networks:
+  top3network:
+    driver: bridge
+
+
+services:
+  db:
+    container_name: top3d_postgres
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - top3network
+
+
+  ap:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: top3distances
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+    depends_on:
+      - db
+    networks:
+      - top3network
