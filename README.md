@@ -17,6 +17,8 @@ The top3distance app can do the following:
 
 ### Query to get top 3 the most distant users for each nationality
 
+![Screenshot](/demo_query_image.png)
+
 ```sql
 WITH all_distances AS
   (SELECT DISTINCT ON (distance) nationality,
